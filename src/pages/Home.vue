@@ -14,7 +14,7 @@ import {signIn, loggedIn} from "@/Composables/Informations";
       </div>
       <div class="element">
         <p>Cerchi degli appunti?</p>
-        <router-link to="/courses/notes" class="link notes-cl" disabled>VAI</router-link>
+        <router-link to="/" class="link notes-cl">VAI</router-link>
       </div>
       <div class="element">
         <p>Condividi Appunti o esami</p>
