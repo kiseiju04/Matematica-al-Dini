@@ -1,0 +1,31 @@
+html {
+    --exams-cl: #B5EEB9;
+    --notes-cl: #FFA3A3;
+    --share-cl: #D2AFEA;
+}
+
+.exams-cl {
+    color: var(--exams-cl);
+}
+
+.notes-cl {
+    color: var(--notes-cl);
+}
+
+.share-cl {
+    color: var(--share-cl);
+}
+
+.page {
+    align-items: center;
+    justify-items: center;
+    display: grid;
+
+    font-size: 2em;
+}
+
+p {
+    margin: 0;
+}
+
+
