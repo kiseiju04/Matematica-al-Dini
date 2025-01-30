@@ -1,7 +1,7 @@
 <script setup>
-import {getCourseNameById} from "../Composables/Informations.js";
+import {getCourseNameById, getNotesCourseNameById} from "../Composables/Informations.js";
 import {gapi} from "gapi-script";
-import { onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 
 const data = ref(null);
 let props = defineProps(["id", "type"])
@@ -10,11 +10,22 @@ let parziali = ref([])
 let interi = ref("")
 let opened = ref(false)
 let name = ref("")
+let notes = ref([])
+let displayNotes = ref([])
+let input = ref("")
+
+function filter() {
+  displayNotes.value = [...notes.value]
+  displayNotes.value = displayNotes.value.filter((a) => {
+    var toSearch = a.name.toLowerCase() + " " + a.description.toLowerCase()
+    toSearch.includes(input.value.toLowerCase())
+  })
+}
 
 const fetchData = async () => {
-  name.value = getCourseNameById(props.id)
-
   if (props.type === 'exams') {
+    name.value = getCourseNameById(props.id)
+
     gapi.client.drive.files.list({
       q: `'${props.id}' in parents and trashed = false`,
       fields: 'files(id, name)',
@@ -37,11 +48,24 @@ const fetchData = async () => {
     }).catch((error) => {
       console.error("Errore durante la lettura dei file", error);
     });
+  } else {
+    name.value = getNotesCourseNameById(props.id)
+
+    gapi.client.drive.files.list({
+      q: `'${props.id}' in parents and trashed = false`,
+      fields: 'files(id, name, description)',
+      supportsAllDrives: true
+    }).then(response => {
+      notes.value = response.result.files
+      filter()
+    }).catch((error) => {
+      console.error("Errore durante la lettura dei file", error);
+    });
   }
 };
 
 onMounted(() => {
-  setTimeout(fetchData, 400)
+  setTimeout(fetchData, 600)
 });
 </script>
 
@@ -68,16 +92,27 @@ onMounted(() => {
       >- orali</a>
     </template>
     <template v-if="type === 'notes'">
-      <div></div>
+      <div class="search" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">
+        <span :class="[type === 'exams' ? 'search-logo-e' : 'search-logo-n']"></span>
+        <input @input="filter" v-model="input" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']" placeholder="cerca" type="text">
+      </div>
 
-      <div>
-        <p>- lezione 21/01/2018</p>
+      <div class="list">
+        <a
+            class="link"
+           :href="`https://drive.google.com/file/d/${n.id}/view?usp=sharing`"
+            v-for="n in displayNotes"
+        >- {{ n.name }}</a>
       </div>
     </template>
   </div>
 </template>
 
 <style scoped>
+.page {
+  grid-template-rows: auto auto auto auto auto 1fr;
+}
+
 .title {
   margin: 0.5em 0 1em;
 }
@@ -99,5 +134,42 @@ onMounted(() => {
 .link {
   color: white;
   text-decoration: none;
+}
+
+.search {
+  border: 1px solid currentColor;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 1em 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+
+  span {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    width: 0.8em;
+    aspect-ratio: 1;
+    background-size: cover;
+  }
+
+  input {
+    width: calc(100% - 2.2em);
+    justify-self: end;
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    background: none;
+    border: none;
+    outline: none;
+  }
+}
+
+
+.search-logo-e {
+  background-image: url("../assets/search-exams.svg");
+}
+
+.search-logo-n {
+  background-image: url("../assets/search-notes.svg");
 }
 </style>

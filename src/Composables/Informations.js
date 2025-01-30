@@ -15,6 +15,8 @@ var uploadFolderId = ref("")
 
 const accessToken = ref("");
 
+var notes_courses = ref([])
+
 const initGoogleDrive = (callback) => {
   gapi.load("client:auth2", () => {
     gapi.client.init({
@@ -84,10 +86,30 @@ function getCoursesFolder(folderId) {
   });
 }
 
+function getNotesCoursesFolder() {
+  let folderId = "1U5d5V_5JciAQ7w8QHf8rchjExLkUTyg3"
+  gapi.client.drive.files.list({
+    q: `'${folderId}' in parents and trashed = false`,
+    fields: 'files(id, name)',
+    supportsAllDrives: true
+  }).then(response => {
+    notes_courses.value = response.result.files
+  }).catch((error) => {
+    console.error("Errore durante la lettura dei file", error);
+  });
+}
+
 function getCourseNameById(id) {
   for (var i = 0; i < courses.value.length; i++) {
     if (courses.value[i].id === id)
         return courses.value[i].name
+  }
+}
+
+function getNotesCourseNameById(id) {
+  for (var i = 0; i < notes_courses.value.length; i++) {
+    if (notes_courses.value[i].id === id)
+      return notes_courses.value[i].name
   }
 }
 
@@ -100,5 +122,8 @@ export {
   courses,
   uploadFolderId,
   getCourseNameById,
-  accessToken
+  accessToken,
+  notes_courses,
+  getNotesCoursesFolder,
+  getNotesCourseNameById
 }

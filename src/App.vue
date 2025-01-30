@@ -40,8 +40,8 @@ function openMenu() {
   animation.value = true
   setTimeout(() => {
     animation.value = false
-    menu.value = true
-  }, 1900)
+    menu.value = !menu.value
+  }, 1800)
 }
 
 function getBackground() {
@@ -86,7 +86,12 @@ body {
   background-position: v-bind("backgroundOrigin");
   padding: 0;
   box-sizing: border-box;
-  font: 1em "DkCrayonCrumble", sans-serif;}
+  font: 1em "DkCrayonCrumble", sans-serif;
+  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+}
 
 @font-face {
   font-family: DkCrayonCrumble;
@@ -102,7 +107,7 @@ body {
   grid-template-columns: 1em 1fr;
 
   h1 {
-    font-size: 2.2em;
+    font-size: 2.1em;
     margin: 0;
     cursor: pointer;
   }
@@ -131,7 +136,7 @@ body {
 
 .cimosa-black {
   position: absolute;
-  z-index: 0;
+  z-index: 9;
   top: 3em;
   width: 100vw;
   background-image: url("assets/background.jpg");
@@ -142,7 +147,7 @@ body {
 }
 
 .cimosa {
-  z-index: 1;
+  z-index: 10;
   position: absolute;
   background-image: url("./assets/cimosa.svg");
   background-size: cover;

@@ -5,7 +5,7 @@ import {signIn, loggedIn} from "@/Composables/Informations";
 <template>
   <div class="page">
     <template v-if="!loggedIn">
-      <button class="link" style="background: none; color: white;" @click="signIn">LOGIN</button>
+      <button class="link login" style="background: none; color: white;" @click="signIn">LOGIN</button>
     </template>
     <template v-else>
       <div class="element">
@@ -14,7 +14,7 @@ import {signIn, loggedIn} from "@/Composables/Informations";
       </div>
       <div class="element">
         <p>Cerchi degli appunti?</p>
-        <router-link to="/" class="link notes-cl">VAI</router-link>
+        <router-link to="/courses/notes" class="link notes-cl">VAI</router-link>
       </div>
       <div class="element">
         <p>Condividi Appunti o esami</p>
@@ -44,5 +44,10 @@ import {signIn, loggedIn} from "@/Composables/Informations";
   text-decoration: none;
   border: 1px solid currentColor;
   border-radius: 50px;
+}
+
+.login {
+  font-size: 1.5em;
+  padding-bottom: 0.4em;
 }
 </style>

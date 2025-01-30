@@ -142,7 +142,10 @@ onMounted(() => {
 <div class="page">
   <p class="share-cl">CONDIVIDI</p>
 
-  <p class="text">clicca il bottone qui sotto per accedere and un drive dove caricare le foto dei compiti, se invece vuoi condividere le domande di un orale crea un nuovo file docs con le varie domande</p>
+  <p class="text">
+    clicca il bottone qui sotto per accedere ad un drive dove caricare le foto dei compiti. <br>
+    se invece vuoi condividere le domande di un orale crea un nuovo file docs con le varie domande
+  </p>
 
   <a target="_blank" href="https://drive.google.com/drive/folders/14HPG4wZFpvnMaM0NYyshcyBsmFjOwPBk?usp=sharing" class="link share-cl">CARICA</a>
 </div>

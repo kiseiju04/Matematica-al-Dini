@@ -22,6 +22,8 @@ html {
     display: grid;
 
     font-size: 2em;
+    max-height: 100%;
+    overflow-y: scroll;
 }
 
 p {

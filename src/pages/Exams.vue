@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {gapi} from "gapi-script";
+import Solution from "@/components/Solution.vue";
 
 let props = defineProps(["id", "name"])
 var files = ref([])
@@ -8,7 +9,7 @@ var files = ref([])
 onMounted(() => {
     gapi.client.drive.files.list({
       q: `'${props.id}' in parents and trashed = false`,
-      fields: 'files(id, name)',
+      fields: 'files(id, name, description)',
       supportsAllDrives: true
     }).then(response => {
       files.value = response.result.files
@@ -23,17 +24,17 @@ onMounted(() => {
   <div class="page">
     <p class="title exams-cl">{{ name }}</p>
     <div class="list">
-      <a
-          class="link"
-          v-for="f in files"
-          :href="`https://drive.google.com/file/d/${f.id}/view?usp=sharing`"
-          target="_blank"
-      >{{ f.name }}</a>
+      <Solution :key="f.id" :link="f.description" :file="f" v-for="f in files"></Solution>
     </div>
   </div>
 </template>
 
 <style scoped>
+.page {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr;
+}
+
 .title {
   margin: 0.5em 0 0;
 }
@@ -43,10 +44,6 @@ onMounted(() => {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 0.5em;
-}
-
-.link {
-  color: white;
-  text-decoration: none;
+  justify-items: left;
 }
 </style>

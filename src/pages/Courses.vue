@@ -1,16 +1,27 @@
 <script setup>
-import {courses} from "@/Composables/Informations.js";
+import {courses, getNotesCoursesFolder, notes_courses} from "@/Composables/Informations.js";
 import {onMounted, ref} from "vue";
 let props = defineProps(["type"])
 let displayedCourses = ref([])
 let input = ref("")
 function filter() {
-  displayedCourses.value = [...courses.value]
-  displayedCourses.value = displayedCourses.value.filter((a) => a.name.toLowerCase().includes(input.value.toLowerCase()))
+  if (props.type === "exams") {
+    displayedCourses.value = [...courses.value]
+    displayedCourses.value = displayedCourses.value.filter((a) => a.name.toLowerCase().includes(input.value.toLowerCase()))
+    displayedCourses.value.sort((a, b) => a.name > b.name)
+  } else {
+    displayedCourses.value = [...notes_courses.value]
+    displayedCourses.value = displayedCourses.value.filter((a) => a.name.toLowerCase().includes(input.value.toLowerCase()))
+    displayedCourses.value.sort((a, b) => a.name > b.name)
+  }
 }
 
 onMounted(() => {
-  displayedCourses.value = [...courses.value]
+  if (props.type === "notes") {
+    getNotesCoursesFolder()
+  }
+
+  filter()
 
   setTimeout(() => {
     filter()
@@ -25,7 +36,7 @@ onMounted(() => {
       <span :class="[type === 'exams' ? 'search-logo-e' : 'search-logo-n']"></span>
       <input @input="filter" v-model="input" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']" placeholder="cerca" type="text">
     </div>
-    <div class="list">
+    <div class="list list-notes">
       <router-link :key="c.id" class="link" :to="`/course/${c.id}/${type}`" v-for="c in displayedCourses">- {{ c.name }}</router-link>
     </div>
   </div>
@@ -33,7 +44,7 @@ onMounted(() => {
 
 <style scoped>
 .page {
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto auto 1fr;
   grid-row-gap: 0.5em;
 }
 
@@ -46,6 +57,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 0.5em;
+  justify-items: left;
 }
 
 .search-logo-e {
@@ -88,4 +100,5 @@ onMounted(() => {
   color: white;
   text-decoration: none;
 }
+
 </style>
