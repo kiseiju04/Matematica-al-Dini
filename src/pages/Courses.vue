@@ -1,6 +1,6 @@
 <script setup>
-import {courses, getNotesCoursesFolder, notes_courses} from "@/Composables/Informations.js";
 import {onMounted, ref} from "vue";
+import {courses, notes_courses} from "@/Composables/Courses.js";
 let props = defineProps(["type"])
 let displayedCourses = ref([])
 let input = ref("")
@@ -17,15 +17,7 @@ function filter() {
 }
 
 onMounted(() => {
-  if (props.type === "notes") {
-    getNotesCoursesFolder()
-  }
-
   filter()
-
-  setTimeout(() => {
-    filter()
-  }, 1000)
 })
 </script>
 
@@ -37,7 +29,7 @@ onMounted(() => {
       <input @input="filter" v-model="input" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']" placeholder="cerca" type="text">
     </div>
     <div class="list list-notes">
-      <router-link :key="c.id" class="link" :to="`/course/${c.id}/${type}`" v-for="c in displayedCourses">- {{ c.name }}</router-link>
+      <router-link :key="c.name" class="link" :to="`/course/${c.name}/${type}`" v-for="c in displayedCourses">- {{ c.name }}</router-link>
     </div>
   </div>
 </template>

@@ -1,18 +1,9 @@
 <script setup>
-import {getCourseNameById, getNotesCourseNameById} from "../Composables/Informations.js";
-import {gapi} from "gapi-script";
 import { onMounted, ref } from "vue";
+import {courses, getCourseIndexByName} from "@/Composables/Courses.js";
 
-const data = ref(null);
 let props = defineProps(["id", "type"])
-let orali = ref("")
-let parziali = ref([])
-let interi = ref("")
 let opened = ref(false)
-let name = ref("")
-let notes = ref([])
-let displayNotes = ref([])
-let input = ref("")
 
 function filter() {
   displayNotes.value = [...notes.value]
@@ -21,73 +12,27 @@ function filter() {
     toSearch.includes(input.value.toLowerCase())
   })
 }
-
-const fetchData = async () => {
-  if (props.type === 'exams') {
-    name.value = getCourseNameById(props.id)
-
-    gapi.client.drive.files.list({
-      q: `'${props.id}' in parents and trashed = false`,
-      fields: 'files(id, name)',
-      supportsAllDrives: true
-    }).then(response => {
-      var files = response.result.files
-
-      for (var i = 0; i < files.length; i++) {
-        if (files[i].name.includes("parziale")) {
-          parziali.value.push(files[i])
-        } else if (files[i].name === "Interi") {
-          interi.value = files[i].id
-        } else if (files[i].name === "Orali") {
-          orali.value = files[i].id
-        }
-      }
-
-      parziali.value.sort((a,b) => a.name > b.name)
-
-    }).catch((error) => {
-      console.error("Errore durante la lettura dei file", error);
-    });
-  } else {
-    name.value = getNotesCourseNameById(props.id)
-
-    gapi.client.drive.files.list({
-      q: `'${props.id}' in parents and trashed = false`,
-      fields: 'files(id, name, description)',
-      supportsAllDrives: true
-    }).then(response => {
-      notes.value = response.result.files
-      filter()
-    }).catch((error) => {
-      console.error("Errore durante la lettura dei file", error);
-    });
-  }
-};
-
-onMounted(() => {
-  setTimeout(fetchData, 600)
-});
 </script>
 
 <template>
   <div class="page">
-    <p class="title" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">{{ name }}</p>
+    <p class="title" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">{{ id }}</p>
     <template v-if="type === 'exams'">
-      <router-link class="link" :to="`/exams/${interi}/interi ${getCourseNameById(id)}`">- interi</router-link>
+      <router-link class="link" :to="`/exams/interi/${id}/interi ${ id }`">- interi</router-link>
       <div class="list">
         <p class="link" @click="opened = !opened">- parziali</p>
 
         <div class="sub-list" v-if="opened">
           <router-link
-              v-for="p in parziali"
-              :to="`/exams/${p.id}/${p.name} ${getCourseNameById(id)}`"
+              v-for="p in courses[getCourseIndexByName(id)].parziali"
+              :to="`/exams/${p.name}/${getCourseIndexByName(id)}/${p.name} ${id}`"
               class="link"
           >- {{ p.name }}</router-link>
         </div>
       </div>
       <a
           class="link"
-          :href="`https://docs.google.com/document/d/${orali}/edit?usp=sharing`"
+          :href="`https://docs.google.com/document/d/${courses[getCourseIndexByName(id)].orali}/edit?usp=sharing`"
           target="_blank"
       >- orali</a>
     </template>

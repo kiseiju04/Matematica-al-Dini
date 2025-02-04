@@ -2,21 +2,21 @@
 import {onMounted, ref} from "vue";
 import {gapi} from "gapi-script";
 import Solution from "@/components/Solution.vue";
+import {generatedData} from "@/Composables/Informations.js";
+import {courses, getCourseIndexByName} from "@/Composables/Courses.js";
 
-let props = defineProps(["id", "name"])
-var files = ref([])
+let props = defineProps(["type", "id", "name"])
+let files = ref([])
 
 onMounted(() => {
-    gapi.client.drive.files.list({
-      q: `'${props.id}' in parents and trashed = false`,
-      fields: 'files(id, name, description)',
-      supportsAllDrives: true
-    }).then(response => {
-      files.value = response.result.files
-      files.value.sort((a, b) => a.name > b.name)
-    }).catch((error) => {
-      console.error("Errore durante la lettura dei file", error);
-    });
+  if (props.type === "interi") {
+    files.value = courses.value[getCourseIndexByName(props.id)].interi
+  } else {
+    const match = props.type.match(/\d+/);
+    let index = match ? parseInt(match[0], 10) - 1 : null;
+
+    files.value = courses.value[getCourseIndexByName(props.id)].parziali[index].files
+  }
 })
 </script>
 

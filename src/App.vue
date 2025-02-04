@@ -7,7 +7,7 @@
       <h1 @click="router.push('/')">MATEMATICA al DINI</h1>
     </div>
     <template v-if="!menu">
-      <router-view :key="route.fullPath" v-if="loaded"></router-view>
+      <router-view :key="route.fullPath"></router-view>
     </template>
     <template v-else>
       <div class="link-list">
@@ -21,12 +21,11 @@
 </template>
 
 <script setup>
-// todo
-// <router-link class="link" @click = "menu = false"to = "/leaderboard" > CLASSIFICA < /router-link>
-
 import {getRootFolder, initGoogleDrive} from "@/Composables/Informations";
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
+import {courses, notes_courses} from "@/Composables/Courses.js";
+import data from "./assets/dati.json"
 
 let router = useRouter()
 let route = useRoute()
@@ -55,12 +54,11 @@ function getBackground() {
   return s
 }
 
-onMounted(async () => {
-  await initGoogleDrive(() => {
-    getRootFolder(loaded)
-  })
-
+onMounted( () => {
   backgroundOrigin.value = getBackground()
+
+  courses.value = data["courses"]
+  notes_courses.value = data["notes_courses"]
 })
 </script>
 

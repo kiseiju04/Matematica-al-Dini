@@ -1,13 +1,8 @@
 <script setup>
-import {signIn, loggedIn} from "@/Composables/Informations";
 </script>
 
 <template>
   <div class="page">
-    <template v-if="!loggedIn">
-      <button class="link login" style="background: none; color: white;" @click="signIn">LOGIN</button>
-    </template>
-    <template v-else>
       <div class="element">
         <p>Cerchi esami e soluzioni?</p>
         <router-link class="link exams-cl" to="/courses/exams">VAI</router-link>
@@ -20,7 +15,6 @@ import {signIn, loggedIn} from "@/Composables/Informations";
         <p>Condividi Appunti o esami</p>
         <router-link to="/share" class="link share-cl">VAI</router-link>
       </div>
-    </template>
   </div>
 </template>
 
