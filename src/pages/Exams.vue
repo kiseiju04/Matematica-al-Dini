@@ -2,7 +2,6 @@
 import {onMounted, ref} from "vue";
 import {gapi} from "gapi-script";
 import Solution from "@/components/Solution.vue";
-import {generatedData} from "@/Composables/Informations.js";
 import {courses, getCourseIndexByName} from "@/Composables/Courses.js";
 
 let props = defineProps(["type", "id", "name"])
@@ -15,7 +14,7 @@ onMounted(() => {
     const match = props.type.match(/\d+/);
     let index = match ? parseInt(match[0], 10) - 1 : null;
 
-    files.value = courses.value[getCourseIndexByName(props.id)].parziali[index].files
+    files.value = courses.value[props.id].parziali[index].files
   }
 })
 </script>

@@ -1,17 +1,28 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import {courses, getCourseIndexByName} from "@/Composables/Courses.js";
+import {courses, getCourseIndexByName, getNotesCourseIndexByName, notes_courses} from "@/Composables/Courses.js";
 
 let props = defineProps(["id", "type"])
 let opened = ref(false)
+let displayNotes = ref([])
+let input = ref("")
 
 function filter() {
-  displayNotes.value = [...notes.value]
+  displayNotes.value = [...notes_courses.value[getNotesCourseIndexByName(props.id)].files]
   displayNotes.value = displayNotes.value.filter((a) => {
-    var toSearch = a.name.toLowerCase() + " " + a.description.toLowerCase()
-    toSearch.includes(input.value.toLowerCase())
+    var toSearch = a.name.toLowerCase()
+
+    if (a.description !== undefined) {
+      toSearch += " " + a.description.toLowerCase()
+    }
+
+    return toSearch.includes(input.value.toLowerCase())
   })
 }
+
+onMounted(() => {
+  filter()
+})
 </script>
 
 <template>
@@ -79,6 +90,7 @@ function filter() {
 .link {
   color: white;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .search {

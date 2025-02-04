@@ -1,5 +1,4 @@
 import {ref} from "vue";
-import {generatedData} from "@/Composables/Informations.js";
 
 var courses = ref([])
 
@@ -10,8 +9,14 @@ function getCourseIndexByName(name) {
   return courses.value.indexOf(el)
 }
 
+function getNotesCourseIndexByName(name) {
+  var el = notes_courses.value.filter((a) => a.name === name)[0]
+  return notes_courses.value.indexOf(el)
+}
+
 export {
   courses,
   notes_courses,
-  getCourseIndexByName
+  getCourseIndexByName,
+  getNotesCourseIndexByName
 }
