@@ -21,7 +21,9 @@ function filter() {
 }
 
 onMounted(() => {
-  filter()
+  if(props.type !== "exams") {
+    filter()
+  }
 })
 </script>
 
