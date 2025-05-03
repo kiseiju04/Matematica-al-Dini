@@ -25,7 +25,7 @@ import {getRootFolder, initGoogleDrive} from "@/Composables/Informations";
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {courses, notes_courses} from "@/Composables/Courses.js";
-import data from "./assets/dati.json"
+import axios from "axios";
 
 let router = useRouter()
 let route = useRoute()
@@ -54,7 +54,9 @@ function getBackground() {
   return s
 }
 
-onMounted( () => {
+onMounted(async () => {
+  var data = await axios.get('https://matematica-al-dini-backend.onrender.com/dati')
+
   backgroundOrigin.value = getBackground()
 
   courses.value = data["courses"]
