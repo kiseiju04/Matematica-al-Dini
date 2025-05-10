@@ -55,7 +55,8 @@ function getBackground() {
 }
 
 onMounted(async () => {
-  var data = await axios.get('https://matematica-al-dini-backend.onrender.com/dati')
+  var response = await axios.get('https://matematica-al-dini-backend.onrender.com/dati')
+  var data = response['data']
 
   backgroundOrigin.value = getBackground()
 

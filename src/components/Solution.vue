@@ -2,13 +2,12 @@
 let props = defineProps(["link", "file"])
 
 function redirect() {
-  console.log(props.link)
   open(props.link, "_blank")
 }
 </script>
 
 <template>
-  <div class="sol-link">
+  <div v-if="link !== ''" class="sol-link">
     <a
         class="link"
         :href="`https://drive.google.com/file/d/${file.id}/view?usp=sharing`"
