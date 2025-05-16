@@ -1,6 +1,5 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import {gapi} from "gapi-script";
 import Solution from "@/components/Solution.vue";
 import {courses, getCourseIndexByName} from "@/Composables/Courses.js";
 
@@ -9,6 +8,7 @@ let files = ref([])
 
 onMounted(() => {
   if (props.type === "interi") {
+    console.log(courses.value)
     files.value = courses.value[getCourseIndexByName(props.id)].interi
   } else {
     const match = props.type.match(/\d+/);

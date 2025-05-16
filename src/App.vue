@@ -7,7 +7,7 @@
       <h1 @click="router.push('/')">MATEMATICA al DINI</h1>
     </div>
     <template v-if="!menu">
-      <router-view :key="route.fullPath"></router-view>
+      <router-view v-if="loaded" :key="route.fullPath"></router-view>
     </template>
     <template v-else>
       <div class="link-list">
@@ -62,6 +62,8 @@ onMounted(async () => {
 
   courses.value = data["courses"]
   notes_courses.value = data["notes_courses"]
+
+  loaded.value = true
 })
 </script>
 

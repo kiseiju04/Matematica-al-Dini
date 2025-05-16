@@ -7,15 +7,15 @@ function redirect() {
 </script>
 
 <template>
-  <div v-if="link !== ''" class="sol-link">
+  <div class="sol-link">
     <a
         class="link"
         :href="`https://drive.google.com/file/d/${file.id}/view?usp=sharing`"
         target="_blank"
-    >{{ file.name }}</a>
+    >-{{ file.name }}</a>
     <a
         class="link sol"
-        v-if="link !== undefined"
+        v-if="link !== undefined && link !== ''"
         @click="redirect"
         target="_blank
   ">sol.</a>
