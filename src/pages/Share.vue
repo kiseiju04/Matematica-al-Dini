@@ -45,15 +45,6 @@ const uploadFile = async () => {
 
 <template>
   <div class="page">
-    <p class="text">
-      Clicca il bottone qui sotto per accedere al Drive.
-    </p>
-
-    <a class="link" target="_blank" href="https://drive.google.com/drive/folders/14HPG4wZFpvnMaM0NYyshcyBsmFjOwPBk?usp=sharing">
-      VAI AL DRIVE
-    </a>
-
-    <hr class="divider" />
 
     <p class="text">
       Oppure carica direttamente un file con una descrizione:
@@ -71,6 +62,17 @@ const uploadFile = async () => {
     </button>
 
     <p class="response">{{ responseMessage }}</p>
+
+    <hr class="divider" />
+
+    <p class="text">
+      Clicca il bottone qui sotto per accedere al Drive.
+    </p>
+
+    <a class="link" target="_blank" href="https://drive.google.com/drive/folders/14HPG4wZFpvnMaM0NYyshcyBsmFjOwPBk?usp=sharing">
+      VAI AL DRIVE
+    </a>
+
   </div>
 </template>
 
