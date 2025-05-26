@@ -56,7 +56,7 @@ const uploadFile = async () => {
       <input type="file" @change="handleFileChange" />
       <span>SCEGLI FILE</span>
     </label>
-    <p v-if="fileUploaded.value" class="text">{{ file.value.name }}</p>
+    <p v-if="fileUploaded" class="uploaded">{{ file.name }}</p>
 
     <textarea v-model="description" placeholder="Scrivi una descrizione..."></textarea>
 
@@ -100,6 +100,12 @@ const uploadFile = async () => {
   margin-bottom: 1em;
 }
 
+.uploaded {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 1em;
+}
+
 .link,
 .upload-button,
 .custom-file {
@@ -118,7 +124,6 @@ const uploadFile = async () => {
 
 .custom-file {
   position: relative;
-  overflow: hidden;
 }
 
 .custom-file input[type="file"] {
