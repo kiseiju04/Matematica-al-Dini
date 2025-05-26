@@ -57,42 +57,55 @@ const uploadFile = async () => {
     </a>
 
     <div class="upload-form">
-      <input type="file" @change="handleFileChange" />
+      <label class="custom-file">
+        <input type="file" @change="handleFileChange" />
+        <span>Scegli file</span>
+      </label>
+
       <textarea v-model="description" placeholder="Scrivi una descrizione..."></textarea>
+
       <button class="link" @click="uploadFile" :disabled="uploading">
         {{ uploading ? 'Caricamento...' : 'Carica direttamente' }}
       </button>
-      <p>{{ responseMessage }}</p>
+
+      <p class="response">{{ responseMessage }}</p>
     </div>
   </div>
 </template>
 
 <style scoped>
+:root {
+  --share-cl: #d1a1f6;
+}
+
 .page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 1.5em;
   gap: 1.2em;
 }
 
 .share-cl {
-  color: var(--share-cl, #2196f3);
+  color: var(--share-cl);
   font-weight: bold;
 }
 
 .text {
-  width: 80%;
+  width: 100%;
   text-align: center;
+  font-size: 1.1em;
 }
 
 .link {
-  font-size: 0.5em;
+  font-size: 1em;
   margin-top: 1em;
-  padding: 0.3em 1.3em 0.1em;
+  padding: 0.4em 1.6em;
   text-decoration: none;
-  border: 1px solid currentColor;
+  border: 2px solid var(--share-cl);
   border-radius: 50px;
   background: none;
+  color: var(--share-cl);
   cursor: pointer;
 }
 
@@ -100,17 +113,46 @@ const uploadFile = async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.8em;
-  width: 80%;
+  gap: 1em;
+  width: 100%;
+  max-width: 400px;
 }
 
 textarea {
   padding: 1em;
   width: 100%;
   color: white;
-  aspect-ratio: 4 / 2;
   background: none;
-  border: 1px solid var(--share-cl, #2196f3);
+  border: 1px solid var(--share-cl);
   border-radius: 20px;
+  font-size: 1em;
+}
+
+.custom-file {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--share-cl);
+  border-radius: 50px;
+  color: var(--share-cl);
+  cursor: pointer;
+  padding: 0.4em 1.2em;
+  font-size: 1em;
+}
+
+.custom-file input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.response {
+  font-size: 0.9em;
+  color: white;
+  text-align: center;
 }
 </style>
