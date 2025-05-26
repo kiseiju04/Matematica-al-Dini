@@ -24,7 +24,7 @@ const uploadFile = async () => {
   responseMessage.value = ''
 
   try {
-    const res = await fetch('http://localhost:5001/upload', {
+    const res = await fetch('https://matematica-al-dini-backend.onrender.com/upload', {
       method: 'POST',
       body: formData
     })
