@@ -45,36 +45,32 @@ const uploadFile = async () => {
 
 <template>
   <div class="page">
-    <p class="share-cl">CONDIVIDI</p>
-
     <p class="text">
-      Usa il modulo qui sotto per caricare direttamente un file con descrizione.
+      Clicca il bottone qui sotto per accedere al Drive.
     </p>
 
-    <div class="upload-form">
-      <label class="custom-file">
-        <input type="file" @change="handleFileChange" />
-        <span>Scegli file</span>
-      </label>
-
-      <textarea v-model="description" placeholder="Scrivi una descrizione..."></textarea>
-
-      <button class="upload-button" @click="uploadFile" :disabled="uploading">
-        {{ uploading ? 'Caricamento...' : 'Carica direttamente' }}
-      </button>
-
-      <p class="response">{{ responseMessage }}</p>
-    </div>
+    <a class="link" target="_blank" href="https://drive.google.com/drive/folders/14HPG4wZFpvnMaM0NYyshcyBsmFjOwPBk?usp=sharing">
+      VAI AL DRIVE
+    </a>
 
     <hr class="divider" />
 
     <p class="text">
-      Oppure clicca il bottone qui sotto per accedere a un Drive dove caricare le foto dei compiti.
+      Oppure carica direttamente un file con una descrizione:
     </p>
 
-    <a target="_blank" href="https://drive.google.com/drive/folders/14HPG4wZFpvnMaM0NYyshcyBsmFjOwPBk?usp=sharing" class="link">
-      VAI AL DRIVE
-    </a>
+    <label class="custom-file">
+      <input type="file" @change="handleFileChange" />
+      <span>SCEGLI FILE</span>
+    </label>
+
+    <textarea v-model="description" placeholder="Scrivi una descrizione..."></textarea>
+
+    <button class="upload-button" @click="uploadFile" :disabled="uploading">
+      {{ uploading ? 'Caricamento...' : 'CARICA DIRETTAMENTE' }}
+    </button>
+
+    <p class="response">{{ responseMessage }}</p>
   </div>
 </template>
 
@@ -87,66 +83,37 @@ const uploadFile = async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.5em;
-  gap: 1.2em;
-}
-
-.share-cl {
-  color: var(--share-cl);
-  font-weight: bold;
+  height: auto;
+  padding: 2em 1em;
+  font-size: 1.75em;
+  text-align: center;
 }
 
 .text {
   width: 100%;
-  text-align: center;
-  font-size: 1.1em;
+  max-width: 600px;
+  margin-bottom: 1em;
 }
 
 .link,
-.upload-button {
-  font-size: 1em;
+.upload-button,
+.custom-file {
   margin-top: 1em;
-  padding: 0.4em 2em;
-  border: 2px solid var(--share-cl);
-  border-radius: 30px;
+  padding: 0.3em 1.3em;
+  text-decoration: none;
+  border: 1px solid var(--share-cl);
+  border-radius: 50px;
   background: none;
   color: var(--share-cl);
+  font-size: 0.6em;
   cursor: pointer;
-  text-decoration: none;
   font-family: 'Courier New', monospace;
-}
-
-.upload-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1em;
-  width: 100%;
-  max-width: 400px;
-}
-
-textarea {
-  padding: 1em;
-  width: 100%;
-  color: white;
-  background: none;
-  border: 1px solid var(--share-cl);
-  border-radius: 20px;
-  font-size: 1em;
-  font-family: 'Courier New', monospace;
+  text-align: center;
 }
 
 .custom-file {
   position: relative;
   overflow: hidden;
-  border: 2px solid var(--share-cl);
-  border-radius: 30px;
-  padding: 0.4em 2em;
-  color: var(--share-cl);
-  cursor: pointer;
-  font-size: 1em;
-  text-align: center;
-  font-family: 'Courier New', monospace;
 }
 
 .custom-file input[type="file"] {
@@ -159,16 +126,29 @@ textarea {
   cursor: pointer;
 }
 
-.response {
-  font-size: 0.9em;
+textarea {
+  margin-top: 1em;
+  padding: 0.8em;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 4 / 2;
+  border: 1px solid var(--share-cl);
+  border-radius: 20px;
+  background: none;
   color: white;
-  text-align: center;
+  font-size: 0.6em;
+  font-family: 'Courier New', monospace;
 }
 
-/* Divisore carino */
+.response {
+  margin-top: 0.5em;
+  font-size: 0.5em;
+  color: white;
+}
+
 .divider {
-  width: 80%;
-  margin: 1em 0;
+  width: 60%;
+  margin: 1.5em 0 0.5em;
   border: none;
   border-top: 1px dashed var(--share-cl);
   text-align: center;
@@ -183,8 +163,8 @@ textarea {
   transform: translateX(-50%);
   background: #2e2e2e;
   color: var(--share-cl);
-  padding: 0 0.5em;
-  font-size: 0.9em;
+  padding: 0 0.6em;
+  font-size: 0.5em;
   font-family: 'Courier New', monospace;
 }
 </style>
