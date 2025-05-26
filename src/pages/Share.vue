@@ -48,13 +48,8 @@ const uploadFile = async () => {
     <p class="share-cl">CONDIVIDI</p>
 
     <p class="text">
-      Clicca il bottone qui sotto per accedere a un Drive dove caricare le foto dei compiti. <br>
-      Oppure usa il modulo qui sotto per caricare direttamente un file con descrizione.
+      Usa il modulo qui sotto per caricare direttamente un file con descrizione.
     </p>
-
-    <a target="_blank" href="https://drive.google.com/drive/folders/14HPG4wZFpvnMaM0NYyshcyBsmFjOwPBk?usp=sharing" class="link share-cl">
-      VAI AL DRIVE
-    </a>
 
     <div class="upload-form">
       <label class="custom-file">
@@ -64,12 +59,22 @@ const uploadFile = async () => {
 
       <textarea v-model="description" placeholder="Scrivi una descrizione..."></textarea>
 
-      <button class="link" @click="uploadFile" :disabled="uploading">
+      <button class="upload-button" @click="uploadFile" :disabled="uploading">
         {{ uploading ? 'Caricamento...' : 'Carica direttamente' }}
       </button>
 
       <p class="response">{{ responseMessage }}</p>
     </div>
+
+    <hr class="divider" />
+
+    <p class="text">
+      Oppure clicca il bottone qui sotto per accedere a un Drive dove caricare le foto dei compiti.
+    </p>
+
+    <a target="_blank" href="https://drive.google.com/drive/folders/14HPG4wZFpvnMaM0NYyshcyBsmFjOwPBk?usp=sharing" class="link">
+      VAI AL DRIVE
+    </a>
   </div>
 </template>
 
@@ -97,16 +102,18 @@ const uploadFile = async () => {
   font-size: 1.1em;
 }
 
-.link {
+.link,
+.upload-button {
   font-size: 1em;
   margin-top: 1em;
-  padding: 0.4em 1.6em;
-  text-decoration: none;
+  padding: 0.4em 2em;
   border: 2px solid var(--share-cl);
-  border-radius: 50px;
+  border-radius: 30px;
   background: none;
   color: var(--share-cl);
   cursor: pointer;
+  text-decoration: none;
+  font-family: 'Courier New', monospace;
 }
 
 .upload-form {
@@ -126,18 +133,20 @@ textarea {
   border: 1px solid var(--share-cl);
   border-radius: 20px;
   font-size: 1em;
+  font-family: 'Courier New', monospace;
 }
 
 .custom-file {
-  display: inline-block;
   position: relative;
   overflow: hidden;
   border: 2px solid var(--share-cl);
-  border-radius: 50px;
+  border-radius: 30px;
+  padding: 0.4em 2em;
   color: var(--share-cl);
   cursor: pointer;
-  padding: 0.4em 1.2em;
   font-size: 1em;
+  text-align: center;
+  font-family: 'Courier New', monospace;
 }
 
 .custom-file input[type="file"] {
@@ -145,14 +154,37 @@ textarea {
   left: 0;
   top: 0;
   opacity: 0;
-  cursor: pointer;
   width: 100%;
   height: 100%;
+  cursor: pointer;
 }
 
 .response {
   font-size: 0.9em;
   color: white;
   text-align: center;
+}
+
+/* Divisore carino */
+.divider {
+  width: 80%;
+  margin: 1em 0;
+  border: none;
+  border-top: 1px dashed var(--share-cl);
+  text-align: center;
+  position: relative;
+}
+
+.divider::before {
+  content: 'oppure';
+  position: absolute;
+  top: -0.6em;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2e2e2e;
+  color: var(--share-cl);
+  padding: 0 0.5em;
+  font-size: 0.9em;
+  font-family: 'Courier New', monospace;
 }
 </style>
