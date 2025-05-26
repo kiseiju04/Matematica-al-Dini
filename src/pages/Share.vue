@@ -47,12 +47,13 @@ const uploadFile = async () => {
   <div class="page">
 
     <p class="text">
-      Oppure carica direttamente un file con una descrizione:
+      Carica direttamente un file con una descrizione:
     </p>
 
     <label class="custom-file">
       <input type="file" @change="handleFileChange" />
       <span>SCEGLI FILE</span>
+      <p v-if="file.value" class="text">{{ file.value.name }}</p>
     </label>
 
     <textarea v-model="description" placeholder="Scrivi una descrizione..."></textarea>
@@ -66,7 +67,7 @@ const uploadFile = async () => {
     <hr class="divider" />
 
     <p class="text">
-      Clicca il bottone qui sotto per accedere al Drive.
+      Oppure clicca il bottone qui sotto per accedere al Drive.
     </p>
 
     <a class="link" target="_blank" href="https://drive.google.com/drive/folders/14HPG4wZFpvnMaM0NYyshcyBsmFjOwPBk?usp=sharing">
