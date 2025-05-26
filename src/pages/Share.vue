@@ -53,8 +53,8 @@ const uploadFile = async () => {
     <label class="custom-file">
       <input type="file" @change="handleFileChange" />
       <span>SCEGLI FILE</span>
-      <p v-if="file.value" class="text">{{ file.value.name }}</p>
     </label>
+    <p v-if="file.value" class="text">{{ file.value.name }}</p>
 
     <textarea v-model="description" placeholder="Scrivi una descrizione..."></textarea>
 
