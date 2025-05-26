@@ -54,7 +54,7 @@ const uploadFile = async () => {
       <input type="file" @change="handleFileChange" />
       <span>SCEGLI FILE</span>
     </label>
-    <p v-if="file.value" class="text">{{ file.value.name }}</p>
+    <p v-if="file.value !== null" class="text">{{ file.value.name }}</p>
 
     <textarea v-model="description" placeholder="Scrivi una descrizione..."></textarea>
 
