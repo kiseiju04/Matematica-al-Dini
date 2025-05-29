@@ -52,6 +52,10 @@ const uploadFile = async () => {
       Carica direttamente un file con una descrizione:
     </p>
 
+    <p class="text text-small">
+      Il file finirà in una cartella dedicata, poi ci penseremo noi a smistarlo al posto giusto sul sito
+    </p>
+
     <label class="custom-file">
       <input type="file" @change="handleFileChange" />
       <span>SCEGLI FILE</span>
@@ -80,6 +84,7 @@ const uploadFile = async () => {
 </template>
 
 <style scoped>
+
 :root {
   --share-cl: #d1a1f6;
 }
@@ -148,6 +153,10 @@ textarea {
   color: white;
   font-size: 0.6em;
   font-family: 'Courier New', monospace;
+}
+
+.text-small {
+  font-size: 0.8em;
 }
 
 .response {
