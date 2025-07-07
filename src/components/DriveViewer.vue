@@ -215,7 +215,6 @@ function getRandomCl() {
   flex-direction: column;
   padding: 1em;
   border-radius: 10px;
-  width: 100%;
 }
 
 .comment-list {
