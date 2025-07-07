@@ -215,7 +215,7 @@ body {
   }
 
   20% {
-    bottom: calc(70vh - 7.5em);
+    bottom: calc(80vh - 7.5em);
   }
 
   100% {
