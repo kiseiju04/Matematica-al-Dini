@@ -219,7 +219,7 @@ body {
   }
 
   20% {
-    bottom: calc(80vh - 5em);
+    bottom: calc(80vh - 6.5em);
   }
 
   100% {
