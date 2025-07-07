@@ -73,6 +73,14 @@ onMounted(async () => {
   notes_courses.value = data["notes_courses"]
 
   loaded.value = true
+
+  setInterval(async () => {
+    var response = await axios.get('https://matematica-al-dini-backend.onrender.com/dati')
+    var data = response['data']
+
+    courses.value = data["courses"]
+    notes_courses.value = data["notes_courses"]
+  }, 3600 * 1000)
 })
 </script>
 
@@ -206,6 +214,10 @@ body {
     bottom: calc(100vh - 7.5em);
   }
 
+  20% {
+    bottom: calc(70vh - 7.5em);
+  }
+
   100% {
     bottom: 0;
   }
@@ -229,7 +241,7 @@ body {
   }
 
   .cimosa-black {
-    animation: clear-black-mobile ease-in-out 2000ms;
+    animation: clear-black-mobile ease-in-out 1800ms;
   }
 
   .cimosa {
