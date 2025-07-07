@@ -20,6 +20,14 @@ function filter() {
   })
 }
 
+function getRealMimeType(file) {
+  if (file.mimeType.includes("image")) {
+    return "image"
+  } else if (file.mimeType.includes("application")) {
+    return  "pdf"
+  }
+}
+
 onMounted(() => {
   if(props.type !== "exams") {
     filter()
@@ -40,9 +48,11 @@ onMounted(() => {
               v-for="p in courses[getCourseIndexByName(id)].parziali"
               :to="`/exams/${p.name}/${getCourseIndexByName(id)}/${p.name} ${id}`"
               class="link"
+              :key="p.name"
           >- {{ p.name }}</router-link>
         </div>
       </div>
+      <router-link class="link exercise" :to="`/exams/esercizi/${id}/esercizi ${ id }`">- esercizi</router-link>
       <a
           class="link"
           :href="`https://docs.google.com/document/d/${courses[getCourseIndexByName(id)].orali}/edit?usp=sharing`"
@@ -56,11 +66,11 @@ onMounted(() => {
       </div>
 
       <div class="list">
-        <a
+        <router-link
             class="link"
-           :href="`https://drive.google.com/file/d/${n.id}/view?usp=sharing`"
+            :to="`/exam/${getRealMimeType(n)}/${n.id}`"
             v-for="n in displayNotes"
-        >- {{ n.name }}</a>
+        >-{{ n.name }}</router-link>
       </div>
     </template>
   </div>
@@ -80,6 +90,10 @@ onMounted(() => {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 0.5em;
+}
+
+.exercise {
+  margin-bottom: 1em;
 }
 
 .list {

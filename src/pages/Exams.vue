@@ -8,8 +8,12 @@ let files = ref([])
 
 onMounted(() => {
   if (props.type === "interi") {
-    console.log(courses.value)
     files.value = courses.value[getCourseIndexByName(props.id)].interi
+  } else if (props.type === "esercizi") {
+    const match = props.type.match(/\d+/);
+    let index = match ? parseInt(match[0], 10) - 1 : null;
+
+    files.value = courses.value[getCourseIndexByName(props.id)].esercizi
   } else {
     const match = props.type.match(/\d+/);
     let index = match ? parseInt(match[0], 10) - 1 : null;

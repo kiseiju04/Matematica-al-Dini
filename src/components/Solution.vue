@@ -1,24 +1,53 @@
 <script setup>
+import {onMounted, ref} from "vue";
+
 let props = defineProps(["link", "file"])
 
-function redirect() {
-  open(props.link, "_blank")
+let solID = ref("")
+let solType = ref("")
+
+let realType = ref("")
+
+function extractFileId(link) {
+  const match = link.match(/\/d\/([a-zA-Z0-9_-]+)/)
+  return match ? match[1] : ''
 }
+
+function detectType(link) {
+  if (link && link === "")
+    return
+
+  if (link.includes('/preview')) return 'pdf'
+  if (link.match(/\.(png|jpg|jpeg|gif)/)) return 'image'
+  return 'unknown'
+}
+
+onMounted(() => {
+  if (props.link !== undefined && props.link !== '') {
+    solID = extractFileId(props.link)
+    solType = detectType(props.link)
+  }
+
+  if (props.file.mimeType.includes("image")) {
+    realType.value = "image"
+  } else if (props.file.mimeType.includes("application")) {
+    realType.value = "pdf"
+  }
+})
 </script>
 
 <template>
   <div class="sol-link">
-    <a
+    <router-link
         class="link"
-        :href="`https://drive.google.com/file/d/${file.id}/view?usp=sharing`"
-        target="_blank"
-    >-{{ file.name }}</a>
-    <a
+        :to="`/exam/${realType}/${file.id}`"
+    >-{{ file.name }}</router-link>
+
+    <router-link
         class="link sol"
         v-if="link !== undefined && link !== ''"
-        @click="redirect"
-        target="_blank
-  ">sol.</a>
+        :to="`/exam/${solType}/${solID}`"
+    >sol.</router-link>
   </div>
 </template>
 

@@ -8,11 +8,9 @@ function filter() {
   if (props.type === "exams") {
     displayedCourses.value = [...courses.value]
     displayedCourses.value = displayedCourses.value.filter((a) => a.name.toLowerCase().includes(input.value.toLowerCase()))
-    displayedCourses.value.sort((a, b) => a.name > b.name)
   } else {
     displayedCourses.value = [...notes_courses.value]
     displayedCourses.value = displayedCourses.value.filter((a) => a.name.toLowerCase().includes(input.value.toLowerCase()))
-    displayedCourses.value.sort((a, b) => a.name > b.name)
   }
 }
 

@@ -1,10 +1,14 @@
 <template>
   <div class="app">
+    <login-modal v-if="login" :close="() => {login = false}"></login-modal>
     <div v-if="animation" class="cimosa"></div>
     <div v-if="animation" class="cimosa-black"></div>
     <div class="navbar">
       <div @click="openMenu" class="menu"></div>
-      <h1 @click="router.push('/')">MATEMATICA al DINI</h1>
+      <div class="h-div">
+        <span class="logo"></span>
+        <h1 @click="router.push('/')"> MATEMATICA al DINI</h1>
+      </div>
     </div>
     <template v-if="!menu">
       <router-view v-if="loaded" :key="route.fullPath"></router-view>
@@ -26,6 +30,8 @@ import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {courses, notes_courses} from "@/Composables/Courses.js";
 import axios from "axios";
+import LoginModal from "@/components/LoginModal.vue";
+import {loggedIn, login, username} from "@/Composables/Info.js";
 
 let router = useRouter()
 let route = useRoute()
@@ -57,6 +63,9 @@ function getBackground() {
 onMounted(async () => {
   var response = await axios.get('https://matematica-al-dini-backend.onrender.com/dati')
   var data = response['data']
+
+  loggedIn.value = localStorage.getItem('authenticated') === 'true'
+  username.value = localStorage.getItem('username')
 
   backgroundOrigin.value = getBackground()
 
@@ -108,12 +117,6 @@ body {
   justify-items: center;
   grid-template-rows: 1fr;
   grid-template-columns: 1em 1fr;
-
-  h1 {
-    font-size: 2.1em;
-    margin: 0;
-    cursor: pointer;
-  }
 }
 
 .menu {
@@ -146,7 +149,7 @@ body {
   background-size: 200vh;
   background-position: v-bind("backgroundOrigin");
   bottom: calc(100vh - 3em);
-  animation: clear-black ease-in-out 2000ms;
+  animation: clear-black ease-in-out 1800ms;
 }
 
 .cimosa {
@@ -158,6 +161,26 @@ body {
   aspect-ratio: 2880 / 550;
   top: 3em;
   animation: clear ease-in-out 2000ms;
+}
+
+.h-div {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 1em;
+
+  h1 {
+    font-size: 2.1em;
+    margin: 0;
+    cursor: pointer;
+  }
+}
+
+.logo {
+  display: block;
+  background-image: url("./assets/logo.svg");
+  background-size: cover;
+  aspect-ratio: 1 / 1;
+  width: 2em;
 }
 
 @keyframes clear-black {
