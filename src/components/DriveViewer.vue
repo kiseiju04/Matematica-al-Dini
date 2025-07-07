@@ -12,6 +12,8 @@ const props = defineProps({
 const fileUrl = ref('')
 const comment = ref('')
 const comments = ref([])
+const tag = ref('')
+const tags = ref([])
 
 const tagCl = [ {
   cl: '181 238 185',
@@ -57,7 +59,6 @@ async function submitComment() {
 }
 
 async function deleteComment(id) {
-  console.log(comments)
 
   try {
     await axios.post('https://matematica-al-dini-backend.onrender.com/delete-comment', {
@@ -65,6 +66,44 @@ async function deleteComment(id) {
     })
 
     await loadComments()
+  } catch (err) {
+    console.error('❌ Errore durante l\'invio del commento:', err)
+  }
+}
+
+async function loadTags() {
+  try {
+    const res = await axios.get(`https://matematica-al-dini-backend.onrender.com/tags/${props.fileId}`)
+    tags.value = res.data || []
+  } catch (err) {
+    console.error('❌ Errore nel caricamento commenti:', err)
+  }
+}
+
+async function submitTag() {
+  if (!tag.value.trim()) return
+
+  try {
+    await axios.post('https://matematica-al-dini-backend.onrender.com/upload-tag', {
+      file_id: props.fileId,
+      text: tag.value.trim()
+    })
+
+    comment.value = ''
+    await loadTags()
+  } catch (err) {
+    console.error('❌ Errore durante l\'invio del commento:', err)
+  }
+}
+
+async function deleteTag(id) {
+  try {
+    await axios.post('https://matematica-al-dini-backend.onrender.com/delete-tag', {
+      tag_id: id,
+      file_id: props.fileId
+    })
+
+    await loadTags()
   } catch (err) {
     console.error('❌ Errore durante l\'invio del commento:', err)
   }
@@ -86,26 +125,21 @@ function getRandomCl() {
 <template>
   <div class="viewer-container">
     <div class="left">
-      <!--<div class="tags">
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="tag" :class="['tag-' + getRandomCl()]">tag1</p>
-        <p class="add-tag" :class="['tag-' + getRandomCl()]">+</p>
-      </div>-->
+      <div class="tags">
+        <div
+            class="tag"
+            v-for="t in tags"
+            :class="['tag-' + getRandomCl()]"
+        >
+          <span class="delete" @click="deleteTag(t.tag_id)">x</span>
+          <p>{{ t.text }}</p>
+        </div>
+
+        <div class="add-tag">
+          <input :class="['tag-' + getRandomCl()]" @keydown.enter="submitTag" v-model="tag">
+          <span @click="submitTag">+</span>
+        </div>
+      </div>
       <iframe
           v-if="fileUrl"
           :src="fileUrl"
@@ -152,8 +186,7 @@ function getRandomCl() {
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr;
-  //grid-template-rows: auto 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: auto 1fr;
   row-gap: 1em;
   justify-content: center;
   align-items: center;
@@ -173,7 +206,11 @@ function getRandomCl() {
   --cl: #ffffff;
   --bg: rgba(255, 255, 255, 0.1);
 
-  font-size: 0.75em;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 0.25em;
+
+  font-size: 1em;
   width: fit-content;
   padding: 0.15em 1em;
   border-radius: 10em;
@@ -185,12 +222,33 @@ function getRandomCl() {
   --cl: #ffffff;
   --bg: rgba(255, 255, 255, 0.1);
 
-  font-size: 0.75em;
-  width: fit-content;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-items: center;
+
+  padding-right: 1em;
+
+  span {
+    padding-top: 0.25em;
+  }
+
+  input {
+    padding: 0.15em 0.5em;
+    font-size: 0.75em;
+    border: none;
+    background: none;
+    color: white;
+    width: 3em;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
   border: var(--cl) 1px solid;
   background: var(--bg);
-  padding: 0.15em 0.5em;
-  border-radius: 100%;
+  border-radius: 2em;
   cursor: pointer;
 }
 

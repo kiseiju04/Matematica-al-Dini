@@ -25,7 +25,6 @@
 </template>
 
 <script setup>
-import {getRootFolder, initGoogleDrive} from "@/Composables/Informations";
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {courses, notes_courses} from "@/Composables/Courses.js";
