@@ -201,6 +201,16 @@ body {
   }
 }
 
+@keyframes clear-black-mobile {
+  0% {
+    bottom: calc(100vh - 5em);
+  }
+
+  100% {
+    bottom: 0;
+  }
+}
+
 @media (max-width: 500px) {
   .navbar {
     padding: 1em;
@@ -219,7 +229,7 @@ body {
   }
 
   .cimosa-black {
-    animation: clear-black ease-in-out 1400ms;
+    animation: clear-black-mobile ease-in-out 2000ms;
   }
 
   .cimosa {
