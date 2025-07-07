@@ -203,7 +203,7 @@ body {
 
 @keyframes clear-black-mobile {
   0% {
-    bottom: calc(100vh - 5em);
+    bottom: calc(100vh - 7.5em);
   }
 
   100% {
