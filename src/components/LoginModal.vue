@@ -18,6 +18,8 @@ import { ref } from 'vue'
 import axios from 'axios'
 import {loggedIn} from "@/Composables/Info.js";
 import {username as g_username} from "@/Composables/Info.js";
+import {onClickOutside} from "@vueuse/core";
+
 
 const props = defineProps({
   show: Boolean,
@@ -48,7 +50,8 @@ async function submit() {
       save()
     }
   } catch (err) {
-    error.value = err.response?.data?.error || 'Errore di rete'
+    console.log(err)
+    error.value = 'Credenziali errate'
   }
 }
 
@@ -60,6 +63,10 @@ function save() {
   localStorage.setItem('username', username.value)
   close()
 }
+
+onClickOutside(() => {
+  close()
+})
 </script>
 
 <style scoped>

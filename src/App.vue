@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <login-modal v-if="login" :close="() => {login = false}"></login-modal>
+    <login-modal v-if="login" :close="closeModal"></login-modal>
     <div v-if="animation" class="cimosa"></div>
     <div v-if="animation" class="cimosa-black"></div>
     <div class="navbar">
@@ -40,6 +40,10 @@ let menu = ref(false)
 let animation = ref(false)
 
 let backgroundOrigin = ref("")
+
+function closeModal() {
+  login.value = false
+}
 
 function openMenu() {
   animation.value = true
@@ -215,7 +219,7 @@ body {
   }
 
   20% {
-    bottom: calc(80vh - 7.5em);
+    bottom: calc(80vh - 5em);
   }
 
   100% {
