@@ -200,4 +200,30 @@ body {
     top: 100%;
   }
 }
+
+@media (max-width: 500px) {
+  .navbar {
+    padding: 1em;
+  }
+
+  .h-div {
+    column-gap: 0.5em;
+
+    h1 {
+      font-size: 1.75em;
+    }
+
+    .logo {
+      width: 1.75em;
+    }
+  }
+
+  .cimosa-black {
+    animation: clear-black ease-in-out 1400ms;
+  }
+
+  .cimosa {
+    animation: clear ease-in-out 2000ms;
+  }
+}
 </style>
