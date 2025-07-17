@@ -42,8 +42,8 @@ onMounted(() => {
   <div class="page">
     <p class="title exams-cl">{{ name }}</p>
     <div class="list">
-      <p v-if="files.length === 0 && subfolders.length === 0">Nessun File</p>
-      <router-link :to="'/exams/' + s.path + '/' + id + '/' + s.name" v-for="s in subfolders">s.name</router-link>
+      <p class="link" v-if="files.length === 0 && subfolders.length === 0">Nessun File</p>
+      <router-link class="link" :to="'/exams/' + s.path + '/' + id + '/' + s.name" v-for="s in subfolders">- {{ s.name }}</router-link>
       <Solution :key="f.id" :link="f.description" :file="f" v-for="f in files"></Solution>
     </div>
   </div>
@@ -57,6 +57,11 @@ onMounted(() => {
 
 .title {
   margin: 0.5em 0 0;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
 }
 
 .list {
