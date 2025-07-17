@@ -14,8 +14,8 @@ onMounted(() => {
   } else if (props.type === "esercizi") {
     files.value = courses.value[getCourseIndexByName(props.id)].esercizi.files
     subfolders.value = courses.value[getCourseIndexByName(props.id)].esercizi.sottocartelle
-  } else if (parziali) {
-    const match = props.type.match(/\d+/);
+  } else if (props.type === "parziali") {
+    const match = props.name.match(/\d+/);
     let index = match ? parseInt(match[0], 10) - 1 : null;
 
     files.value = courses.value[getCourseIndexByName(props.id)].parziali[index].files
@@ -26,13 +26,13 @@ onMounted(() => {
     let typeFix = props.type.split('-')
 
     if (typeFix[1] === "sottocartelle") {
-      files.value = courses.value[typeFix[0]].sottocartelle[typeFix[2]]
+      files.value = courses.value[typeFix[0]].sottocartelle[typeFix[2]].files
     } else if (typeFix[1] === "esercizi") {
-      courses.value[typeFix[0]].esercizi.sottocartelle[typeFix[2]]
+      courses.value[typeFix[0]].esercizi.sottocartelle[typeFix[2]].files
     } else if (typeFix[1] === "interi") {
-      courses.value[typeFix[0]].interi.sottocartelle[typeFix[2]]
+      courses.value[typeFix[0]].interi.sottocartelle[typeFix[2]].files
     } else {
-      courses.value[typeFix[0]].parziali[typeFix[1]].sottocartelle[typeFix[2]]
+      courses.value[typeFix[0]].parziali[typeFix[1]].sottocartelle[typeFix[2]].files
     }
   }
 })
@@ -42,6 +42,7 @@ onMounted(() => {
   <div class="page">
     <p class="title exams-cl">{{ name }}</p>
     <div class="list">
+      <p v-if="files.length === 0 && subfolders.length === 0">Nessun File</p>
       <router-link :to="'/exams/' + s.path + '/' + id + '/' + s.name" v-for="s in subfolders">s.name</router-link>
       <Solution :key="f.id" :link="f.description" :file="f" v-for="f in files"></Solution>
     </div>

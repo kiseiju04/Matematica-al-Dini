@@ -61,7 +61,7 @@ onMounted(() => {
           :href="`https://docs.google.com/document/d/${courses[getCourseIndexByName(id)].orali}/edit?usp=sharing`"
           target="_blank"
       >- orali</a>
-      <router-link :to="'/exams/' + s.path + '/' + id + '/' + s.name" v-for="s in subfolders" class="link">s.name</router-link>
+      <router-link :to="'/exams/' + s.path + '/' + id + '/' + s.name" v-for="s in subfolders" class="link">- {{ s.name }}</router-link>
     </template>
     <template v-if="type === 'notes'">
       <div class="search" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">
@@ -82,7 +82,7 @@ onMounted(() => {
 
 <style scoped>
 .page {
-  grid-template-rows: auto auto auto auto auto 1fr;
+  grid-template-rows: auto auto auto auto auto;
 }
 
 .title {
