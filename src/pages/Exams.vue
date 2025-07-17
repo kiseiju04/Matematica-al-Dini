@@ -28,11 +28,11 @@ onMounted(() => {
     if (typeFix[1] === "sottocartelle") {
       files.value = courses.value[typeFix[0]].sottocartelle[typeFix[2]].files
     } else if (typeFix[1] === "esercizi") {
-      courses.value[typeFix[0]].esercizi.sottocartelle[typeFix[2]].files
+      files.value = courses.value[typeFix[0]].esercizi.sottocartelle[typeFix[2]].files
     } else if (typeFix[1] === "interi") {
-      courses.value[typeFix[0]].interi.sottocartelle[typeFix[2]].files
+      files.value = courses.value[typeFix[0]].interi.sottocartelle[typeFix[2]].files
     } else {
-      courses.value[typeFix[0]].parziali[typeFix[1]].sottocartelle[typeFix[2]].files
+      files.value = courses.value[typeFix[0]].parziali[typeFix[1]].sottocartelle[typeFix[2]].files
     }
   }
 })
