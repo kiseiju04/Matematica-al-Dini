@@ -1,24 +1,39 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import Solution from "@/components/Solution.vue";
-import {courses, getCourseIndexByName} from "@/Composables/Courses.js";
+import {courses, getCourseIndexByName, getSubfolderIndexByName} from "@/Composables/Courses.js";
 
 let props = defineProps(["type", "id", "name"])
 let files = ref([])
+let subfolders = ref([])
 
 onMounted(() => {
   if (props.type === "interi") {
-    files.value = courses.value[getCourseIndexByName(props.id)].interi
+    files.value = courses.value[getCourseIndexByName(props.id)].interi.files
+    subfolders.value = courses.value[getCourseIndexByName(props.id)].interi.sottocartelle
   } else if (props.type === "esercizi") {
+    files.value = courses.value[getCourseIndexByName(props.id)].esercizi.files
+    subfolders.value = courses.value[getCourseIndexByName(props.id)].esercizi.sottocartelle
+  } else if (parziali) {
     const match = props.type.match(/\d+/);
     let index = match ? parseInt(match[0], 10) - 1 : null;
 
-    files.value = courses.value[getCourseIndexByName(props.id)].esercizi
+    files.value = courses.value[getCourseIndexByName(props.id)].parziali[index].files
+    subfolders.value = courses.value[getCourseIndexByName(props.id)].parziali[index].sottocartelle
   } else {
-    const match = props.type.match(/\d+/);
-    let index = match ? parseInt(match[0], 10) - 1 : null;
+    subfolders.value = []
 
-    files.value = courses.value[props.id].parziali[index].files
+    let typeFix = props.type.split('-')
+
+    if (typeFix[1] === "sottocartelle") {
+      files.value = courses.value[typeFix[0]].sottocartelle[typeFix[2]]
+    } else if (typeFix[1] === "esercizi") {
+      courses.value[typeFix[0]].esercizi.sottocartelle[typeFix[2]]
+    } else if (typeFix[1] === "interi") {
+      courses.value[typeFix[0]].interi.sottocartelle[typeFix[2]]
+    } else {
+      courses.value[typeFix[0]].parziali[typeFix[1]].sottocartelle[typeFix[2]]
+    }
   }
 })
 </script>
@@ -27,6 +42,7 @@ onMounted(() => {
   <div class="page">
     <p class="title exams-cl">{{ name }}</p>
     <div class="list">
+      <router-link :to="'/exams/' + s.path + '/' + id + '/' + s.name" v-for="s in subfolders">s.name</router-link>
       <Solution :key="f.id" :link="f.description" :file="f" v-for="f in files"></Solution>
     </div>
   </div>

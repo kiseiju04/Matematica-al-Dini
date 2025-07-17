@@ -5,6 +5,7 @@ import {courses, getCourseIndexByName, getNotesCourseIndexByName, notes_courses}
 let props = defineProps(["id", "type"])
 let opened = ref(false)
 let displayNotes = ref([])
+let subfolders = ref([])
 let input = ref("")
 
 function filter() {
@@ -31,6 +32,8 @@ function getRealMimeType(file) {
 onMounted(() => {
   if(props.type !== "exams") {
     filter()
+  } else {
+    subfolders.value = courses.value[getCourseIndexByName(props.id)].sottocartelle
   }
 })
 </script>
@@ -46,7 +49,7 @@ onMounted(() => {
         <div class="sub-list" v-if="opened">
           <router-link
               v-for="p in courses[getCourseIndexByName(id)].parziali"
-              :to="`/exams/${p.name}/${getCourseIndexByName(id)}/${p.name} ${id}`"
+              :to="`/exams/parziali/${id}/${p.name} ${id}`"
               class="link"
               :key="p.name"
           >- {{ p.name }}</router-link>
@@ -58,6 +61,7 @@ onMounted(() => {
           :href="`https://docs.google.com/document/d/${courses[getCourseIndexByName(id)].orali}/edit?usp=sharing`"
           target="_blank"
       >- orali</a>
+      <router-link :to="'/exams/' + s.path + '/' + id + '/' + s.name" v-for="s in subfolders" class="link">s.name</router-link>
     </template>
     <template v-if="type === 'notes'">
       <div class="search" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">
