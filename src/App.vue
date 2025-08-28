@@ -21,6 +21,8 @@
         <router-link class="link" @click="menu = false" to="/share">CONDIVIDI</router-link>
       </div>
     </template>
+
+    <p class="footer">powered by <b>Sgabuzzini</b></p>
   </div>
 </template>
 
@@ -88,6 +90,17 @@ onMounted(async () => {
 </script>
 
 <style>
+.footer {
+  position: absolute;
+  bottom: 0.5em;
+  right: 2em;
+  text-align: right;
+
+  b {
+    color: orangered;
+  }
+}
+
 body {
   padding: 0;
   margin: 0;
