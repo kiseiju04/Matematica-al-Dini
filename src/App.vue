@@ -1,24 +1,34 @@
 <template>
   <div class="app">
-    <login-modal v-if="login" :close="closeModal"></login-modal>
-    <div v-if="animation" class="cimosa"></div>
-    <div v-if="animation" class="cimosa-black"></div>
-    <div class="navbar">
-      <div @click="openMenu" class="menu"></div>
-      <div class="h-div">
-        <span class="logo"></span>
-        <h1 @click="router.push('/')"> MATEMATICA al DINI</h1>
+    <template v-if="permission">
+      <login-modal v-if="login" :close="closeModal"></login-modal>
+      <div v-if="animation" class="cimosa"></div>
+      <div v-if="animation" class="cimosa-black"></div>
+      <div class="navbar">
+        <div @click="openMenu" class="menu"></div>
+        <div class="h-div">
+          <span class="logo"></span>
+          <h1 @click="router.push('/')"> MATEMATICA al DINI</h1>
+        </div>
       </div>
-    </div>
-    <template v-if="!menu">
-      <router-view v-if="loaded" :key="route.fullPath"></router-view>
+      <template v-if="!menu">
+        <router-view v-if="loaded" :key="route.fullPath"></router-view>
+      </template>
+      <template v-else>
+        <div class="link-list">
+          <router-link class="link" @click="menu = false" to="/">HOME</router-link>
+          <router-link class="link" @click="menu = false" to="/courses/exams">ESAMI</router-link>
+          <router-link class="link" @click="menu = false" to="/courses/notes">APPUNTI</router-link>
+          <router-link class="link" @click="menu = false" to="/share">CONDIVIDI</router-link>
+        </div>
+      </template>
     </template>
+
     <template v-else>
-      <div class="link-list">
-        <router-link class="link" @click="menu = false" to="/">HOME</router-link>
-        <router-link class="link" @click="menu = false" to="/courses/exams">ESAMI</router-link>
-        <router-link class="link" @click="menu = false" to="/courses/notes">APPUNTI</router-link>
-        <router-link class="link" @click="menu = false" to="/share">CONDIVIDI</router-link>
+      <h1>Inserisci la tua mail universitaria</h1>
+      <div>
+        <input v-model="email">
+        <button @click="getPermission">ACCEDI</button>
       </div>
     </template>
 
@@ -34,6 +44,9 @@ import axios from "axios";
 import LoginModal from "@/components/LoginModal.vue";
 import {loggedIn, login, username} from "@/Composables/Info.js";
 
+let permission = ref(false)
+let email = ref('')
+
 let router = useRouter()
 let route = useRoute()
 let loaded = ref(false)
@@ -41,6 +54,13 @@ let menu = ref(false)
 let animation = ref(false)
 
 let backgroundOrigin = ref("")
+
+function getPermission() {
+  if (email.value.includes('@edu.unifi.it') || email.value.includes('@unifi.it'))
+  {
+    permission.value = true
+  }
+}
 
 function closeModal() {
   login.value = false
