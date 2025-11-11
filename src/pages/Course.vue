@@ -40,8 +40,8 @@ onMounted(() => {
 
 <template>
   <div class="page">
-    <p class="title" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">{{ id }}</p>
     <template v-if="type === 'exams'">
+      <p class="title" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">{{ id }}</p>
       <router-link class="link" :to="`/exams/interi/${id}/interi ${ id }`">- interi</router-link>
       <div class="list">
         <p class="link" @click="opened = !opened">- parziali</p>
@@ -64,6 +64,12 @@ onMounted(() => {
       <router-link :to="'/exams/' + s.path + '/' + id + '/' + s.name" v-for="s in subfolders" class="link">- {{ s.name }}</router-link>
     </template>
     <template v-if="type === 'notes'">
+      <div>
+        <p :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">{{ id }}</p>
+        <p class="disclaimer notes-cl">ATTENZIONE: questi appunti dono presi da studenti quindi non ne garantiamo la correttezza</p>
+      </div>
+
+
       <div class="search" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">
         <span :class="[type === 'exams' ? 'search-logo-e' : 'search-logo-n']"></span>
         <input @input="filter" v-model="input" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']" placeholder="cerca" type="text">
@@ -83,6 +89,10 @@ onMounted(() => {
 <style scoped>
 .page {
   grid-template-rows: auto auto auto auto auto;
+}
+
+.disclaimer {
+  font-size: 0.75em;
 }
 
 .title {
