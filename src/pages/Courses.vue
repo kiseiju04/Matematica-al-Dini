@@ -22,7 +22,7 @@ onMounted(() => {
 <template>
   <div class="page">
     <p class="title" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">CORSI</p>
-    <p v-if="type !== 'exams'" class="disclaimer notes-cl">ATTENZIONE: questi appunti dono presi da studenti quindi non ne garantiamo la correttezza</p>
+    <p v-if="type !== 'exams'" class="disclaimer notes-cl">ATTENZIONE: questi appunti sono presi da studenti quindi non ne garantiamo la correttezza</p>
 
     <div class="search" :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">
       <span :class="[type === 'exams' ? 'search-logo-e' : 'search-logo-n']"></span>

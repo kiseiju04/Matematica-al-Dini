@@ -66,7 +66,7 @@ onMounted(() => {
     <template v-if="type === 'notes'">
       <div>
         <p :class="[type === 'exams' ? 'exams-cl' : 'notes-cl']">{{ id }}</p>
-        <p class="disclaimer notes-cl">ATTENZIONE: questi appunti dono presi da studenti quindi non ne garantiamo la correttezza</p>
+        <p class="disclaimer notes-cl">ATTENZIONE: questi appunti sono presi da studenti quindi non ne garantiamo la correttezza</p>
       </div>
 
 
