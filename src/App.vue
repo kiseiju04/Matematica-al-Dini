@@ -1,5 +1,7 @@
 <template>
   <div class="app">
+    <popup v-model:status="popup"></popup>
+
     <template v-if="permission">
       <login-modal v-if="login" :close="closeModal"></login-modal>
       <div v-if="animation" class="cimosa"></div>
@@ -43,9 +45,12 @@ import {courses, notes_courses} from "@/Composables/Courses.js";
 import axios from "axios";
 import LoginModal from "@/components/LoginModal.vue";
 import {loggedIn, login, username} from "@/Composables/Info.js";
+import Popup from "@/components/Popup.vue";
 
 let permission = ref(false)
 let email = ref('')
+
+let popup = ref(true)
 
 let router = useRouter()
 let route = useRoute()
