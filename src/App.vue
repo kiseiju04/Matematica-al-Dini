@@ -35,6 +35,7 @@
     </template>
 
     <p class="footer">powered by <b>Sgabuzzini</b></p>
+    <p class="mail">per problemi potete scriverci <a href="mailto:rappresentantiMateUnifi@googlegroups.com">rappresentantiMateUnifi@googlegroups.com</a></p>
   </div>
 </template>
 
@@ -115,6 +116,17 @@ onMounted(async () => {
 </script>
 
 <style>
+.mail {
+  position: absolute;
+  bottom: 0.5em;
+  left: 2em;
+  text-align: left;
+
+  a {
+    color: orangered;
+  }
+}
+
 .footer {
   position: absolute;
   bottom: 0.5em;
