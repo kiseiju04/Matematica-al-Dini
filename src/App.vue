@@ -35,7 +35,7 @@
     </template>
 
     <p class="footer">powered by <b>Sgabuzzini</b></p>
-    <p class="mail">per problemi potete scriverci <a href="mailto:rappresentantiMateUnifi@googlegroups.com">rappresentantiMateUnifi@googlegroups.com</a></p>
+    <p class="mail">per problemi potete scrivere a <a href="mailto:rappresentantiMateUnifi@googlegroups.com">rappresentantiMateUnifi@googlegroups.com</a></p>
   </div>
 </template>
 
