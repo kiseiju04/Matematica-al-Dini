@@ -118,6 +118,7 @@ onMounted(async () => {
 <style>
 .mail {
   position: absolute;
+  font-size: 0.6em;
   bottom: 0.5em;
   left: 2em;
   text-align: left;
@@ -129,6 +130,7 @@ onMounted(async () => {
 
 .footer {
   position: absolute;
+  font-size: 0.6em;
   bottom: 0.5em;
   right: 2em;
   text-align: right;
