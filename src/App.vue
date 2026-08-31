@@ -50,7 +50,7 @@ import Popup from "@/components/Popup.vue";
 let permission = ref(false)
 let email = ref('')
 
-let popup = ref(true)
+let popup = ref(false) // attivare per attivare il popup donazione
 
 let router = useRouter()
 let route = useRoute()
@@ -91,7 +91,7 @@ function getBackground() {
 }
 
 onMounted(async () => {
-  var response = await axios.get('https://matematica-al-dini-backend.onrender.com/dati')
+  var response = await axios.get('https://matematica-al-dini-backend.sgabuzzini.uk/dati')
   var data = response['data']
 
   loggedIn.value = localStorage.getItem('authenticated') === 'true'
@@ -105,7 +105,7 @@ onMounted(async () => {
   loaded.value = true
 
   setInterval(async () => {
-    var response = await axios.get('https://matematica-al-dini-backend.onrender.com/dati')
+    var response = await axios.get('https://matematica-al-dini-backend.sgabuzzini.uk/dati')
     var data = response['data']
 
     courses.value = data["courses"]
